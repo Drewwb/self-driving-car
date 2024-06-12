@@ -1,10 +1,17 @@
 var Controls = /** @class */ (function () {
-    function Controls() {
+    function Controls(type) {
         this.forward = false;
         this.left = false;
         this.right = false;
         this.reverse = false;
-        this.addKeyboardListeners();
+        switch (type) {
+            case "KEYS":
+                this.addKeyboardListeners();
+                break;
+            case "DUMMY":
+                this.forward = true;
+                break;
+        }
     }
     Controls.prototype.addKeyboardListeners = function () {
         var _this = this;

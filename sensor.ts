@@ -8,24 +8,24 @@ class Sensor {
 
     constructor(car: Car) {
         this.car = car;
-        this.rayCount = 30;
-        this.rayLength = 150;
+        this.rayCount = 80;
+        this.rayLength = 130;
         this.raySpread = Math.PI * 2; //Math.PI / 2?
         this.rays = [];
         this.readings = [];
     }
 
-    update(roadBorders): void {
+    update(roadBorders, traffic){
         this.castRays();
         this.readings = [];
         for(let i = 0; i < this.rays.length; i++) {
             this.readings.push(
-                this.getReading(this.rays[i], roadBorders)
+                this.getReading(this.rays[i], roadBorders, traffic)
             );
         }
     } 
 
-    private getReading(ray, roadBorders) {
+    private getReading(ray, roadBorders, traffic) {
         let touches = [];
         for(let i = 0; i < roadBorders.length; i++) {
             const touch = getIntersection(
@@ -36,6 +36,21 @@ class Sensor {
             );
             if(touch) {
                 touches.push(touch);
+            }
+        }
+
+        for(let i = 0; i <traffic.length; i++) {
+            const poly = traffic[i].polygon;
+            for(let j = 0; j < poly.length; j++) {
+                const value = getIntersection(
+                    ray[0],
+                    ray[1],
+                    poly[j],
+                    poly[(j + 1) % poly.length]
+                );
+                if(value) {
+                    touches.push(value);
+                }
             }
         }
         //complexxxxxx
@@ -68,28 +83,26 @@ class Sensor {
     draw(ctx): void {
         for (let i = 0; i < this.rayCount; i++) {
             let end = this.rays[i][1];
-            if(this.readings[i]) {
+            if (this.readings[i]) {
                 end = this.readings[i];
             }
+    
+            // Calculate the distance from the car to the end of the ray
+            const distance = Math.sqrt(
+                Math.pow(end.x - this.car.x, 2) + Math.pow(end.y - this.car.y, 2)
+            );
+    
+            // Calculate the opacity based on the distance
+            const opacity = 1 - Math.min(1, distance / this.rayLength);
+    
+            // Set the stroke style with the calculated opacity
+            ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
+    
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.strokeStyle = "yellow";
             ctx.moveTo(
                 this.rays[i][0].x,
                 this.rays[i][0].y
-            );
-            ctx.lineTo(
-                end.x,
-                end.y
-            );
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = "black";
-            ctx.moveTo(
-                this.rays[i][1].x,
-                this.rays[i][1].y
             );
             ctx.lineTo(
                 end.x,
