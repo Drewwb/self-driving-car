@@ -9,10 +9,12 @@ var Car = /** @class */ (function () {
         this.maxSpeed = 3;
         this.friction = 0.05;
         this.angle = 0;
+        this.sensor = new Sensor(this);
         this.controls = new Controls();
     }
-    Car.prototype.update = function () {
+    Car.prototype.update = function (roadBorders) {
         this.move();
+        this.sensor.update(roadBorders);
     };
     Car.prototype.move = function () {
         if (this.controls.forward) {
@@ -57,6 +59,7 @@ var Car = /** @class */ (function () {
         ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
         ctx.fill();
         ctx.restore();
+        this.sensor.draw(ctx);
     };
     return Car;
 }());

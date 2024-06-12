@@ -1,6 +1,6 @@
 class Car {
-    private x: number;
-    private y: number;
+    x: number;
+    y: number;
     private width: number;
     private height: number;
     private controls: Controls;
@@ -8,7 +8,8 @@ class Car {
     private acceleration: number;
     private maxSpeed: number;
     private friction: number;
-    private angle: number;
+    angle: number;
+    private sensor: Sensor;
 
     constructor(x: number, y: number, width: number, height: number) {
         this.x = x;
@@ -22,11 +23,18 @@ class Car {
         this.friction = 0.05;
         this.angle = 0;
 
+        this.sensor = new Sensor(this);
         this.controls = new Controls(); 
     }
 
-    update(): void{
+    update(roadBorders): void{
         this.move();
+        this.sensor.update(roadBorders);
+    }
+
+    private createPolygon() {
+        const points = [];
+        
     }
 
     private move(): void {
@@ -82,5 +90,7 @@ class Car {
         ctx.fill();
 
         ctx.restore();
+
+        this.sensor.draw(ctx);
     }
 }
