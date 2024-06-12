@@ -8,7 +8,7 @@ class Sensor {
 
     constructor(car: Car) {
         this.car = car;
-        this.rayCount = 80;
+        this.rayCount = 10;
         this.rayLength = 130;
         this.raySpread = Math.PI * 2; //Math.PI / 2?
         this.rays = [];
@@ -96,7 +96,7 @@ class Sensor {
             const opacity = 1 - Math.min(1, distance / this.rayLength);
     
             // Set the stroke style with the calculated opacity
-            ctx.strokeStyle = `rgba(0, 0, 0, ${opacity})`;
+            ctx.strokeStyle = `rgba(255, 255, 0, ${opacity})`;
     
             ctx.beginPath();
             ctx.lineWidth = 2;

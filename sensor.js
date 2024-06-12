@@ -1,7 +1,7 @@
 var Sensor = /** @class */ (function () {
     function Sensor(car) {
         this.car = car;
-        this.rayCount = 80;
+        this.rayCount = 10;
         this.rayLength = 130;
         this.raySpread = Math.PI * 2; //Math.PI / 2?
         this.rays = [];
@@ -66,7 +66,7 @@ var Sensor = /** @class */ (function () {
             // Calculate the opacity based on the distance
             var opacity = 1 - Math.min(1, distance / this.rayLength);
             // Set the stroke style with the calculated opacity
-            ctx.strokeStyle = "rgba(0, 0, 0, ".concat(opacity, ")");
+            ctx.strokeStyle = "rgba(255, 255, 0, ".concat(opacity, ")");
             ctx.beginPath();
             ctx.lineWidth = 2;
             ctx.moveTo(this.rays[i][0].x, this.rays[i][0].y);

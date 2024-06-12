@@ -29,3 +29,10 @@ function polyIntersect(poly1, poly2) {
     }
     return false;
 }
+function getRGBA(value) {
+    var alpha = Math.abs(value);
+    var R = value < 0 ? 0 : 255;
+    var G = R;
+    var B = value > 0 ? 0 : 255;
+    return "rgba(" + R + "," + G + "," + B + "," + alpha + ")";
+}
