@@ -22,7 +22,7 @@ class Car {
         this.height = height;
 
         this.speed = 0;
-        this.acceleration = 0.2;
+        this.acceleration = 0.1;
         this.maxSpeed = maxSpeed;
         this.friction = 0.05;
         this.angle = 0;
@@ -39,7 +39,7 @@ class Car {
     }
 
     update(roadBorders, traffic) {
-        if(!this.damaged && roadBorders && traffic) {
+        if(!this.damaged) {
             this.move();
             this.polygon = this.createPolygon();
             this.damaged = this.assessDamage(roadBorders, traffic);
@@ -139,7 +139,7 @@ class Car {
         this.y -= this.speed;
     }
 
-    draw(ctx: CanvasRenderingContext2D, color): void {
+    draw(ctx: CanvasRenderingContext2D, color, drawSensor = false): void {
         if(this.damaged) {
             ctx.fillStyle = "pink";
         } else {
@@ -151,7 +151,7 @@ class Car {
             ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
         }
         ctx.fill();
-        if(this.sensor) {
+        if(this.sensor && drawSensor) {
             this.sensor.draw(ctx);
         }
         

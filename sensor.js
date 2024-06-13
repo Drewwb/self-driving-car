@@ -15,7 +15,14 @@ var Sensor = /** @class */ (function () {
         }
     };
     Sensor.prototype.getReading = function (ray, roadBorders, traffic) {
+        // console.log('ray:', ray);
+        // console.log('roadBorders:', roadBorders);
+        // console.log('traffic:', traffic);
         var touches = [];
+        if (!roadBorders) {
+            // console.error('roadBorders is undefined');
+            return;
+        }
         for (var i = 0; i < roadBorders.length; i++) {
             var touch = getIntersection(ray[0], ray[1], roadBorders[i][0], roadBorders[i][1]);
             if (touch) {

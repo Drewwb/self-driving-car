@@ -6,7 +6,7 @@ var Car = /** @class */ (function () {
         this.width = width;
         this.height = height;
         this.speed = 0;
-        this.acceleration = 0.2;
+        this.acceleration = 0.1;
         this.maxSpeed = maxSpeed;
         this.friction = 0.05;
         this.angle = 0;
@@ -19,7 +19,7 @@ var Car = /** @class */ (function () {
         this.controls = new Controls(controlType);
     }
     Car.prototype.update = function (roadBorders, traffic) {
-        if (!this.damaged && roadBorders && traffic) {
+        if (!this.damaged) {
             this.move();
             this.polygon = this.createPolygon();
             this.damaged = this.assessDamage(roadBorders, traffic);
@@ -107,7 +107,8 @@ var Car = /** @class */ (function () {
         this.y -= Math.cos(this.angle) * this.speed;
         this.y -= this.speed;
     };
-    Car.prototype.draw = function (ctx, color) {
+    Car.prototype.draw = function (ctx, color, drawSensor) {
+        if (drawSensor === void 0) { drawSensor = false; }
         if (this.damaged) {
             ctx.fillStyle = "pink";
         }
@@ -120,7 +121,7 @@ var Car = /** @class */ (function () {
             ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
         }
         ctx.fill();
-        if (this.sensor) {
+        if (this.sensor && drawSensor) {
             this.sensor.draw(ctx);
         }
     };

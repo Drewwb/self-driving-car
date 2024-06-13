@@ -25,7 +25,7 @@ class Sensor {
         }
     } 
 
-    private getReading(ray, roadBorders, traffic) {
+    getReading(ray, roadBorders: number[][], traffic) {
         let touches = [];
         for(let i = 0; i < roadBorders.length; i++) {
             const touch = getIntersection(
