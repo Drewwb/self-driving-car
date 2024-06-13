@@ -7,17 +7,68 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="carCanvas"></canvas>
-    <div id="verticalButtons">
-        <button onclick="save()"></button>
-        <button onclick="discard()"></button>
+    <div class="container">
+        <div class="text-with-underline">
+            <span class="label">Pre-Trained Model</span>
+            <hr class="underline">
+        </div>
+        <div id="horizontalButtons">
+            <div class="tooltip">
+                <button id="Robot" onclick="loadPretrainedModel()">
+                    <img src="robot.png" alt="Robot">
+                </button>
+                <span class="tooltiptext">Load Pre-Trained Model</span>
+            </div>
+        </div>
+        <div class="text-with-underline">
+            <span class="label">Train Model</span>
+            <hr class="underline">
+        </div>
+        <div id="horizontalButtons">
+            <div class="tooltip">
+                <button id="Save" onclick="saveAndRun()">
+                    <img src="bettersave.png" alt="Save Brain">
+                </button>
+                <span class="tooltiptext">Save Model / Run</span>
+            </div>
+            <div class="tooltip">
+                <button id="Discard" onclick="discardAndRun()">
+                    <img src="trash.png" alt="Discard Brain" style="margin-right: 10px;">
+                </button>
+                <span class="tooltiptext">Discard Model</span>
+            </div>
+        </div>
+        <div class="text-with-underline">
+            <span class="label">Vehicles</span>
+            <hr class="underline">
+        </div>
+        <div id="horizontalButtons" style="margin-top: 5px;">
+            <div id="imageContainer">
+                <img src="redcar.png" alt="Description of your image">
+            </div>
+            <div id="verticalButtons" style="margin-top: 5px;">
+                <button class="vehicleButton highButton">High</button>
+                <button class="vehicleButton mediumButton">Med</button>
+                <button class="vehicleButton lowButton">Low</button>
+            </div>
+            <div id="imageContainer">
+                <img src="bluecar.png" alt="Description of your image" style="height: 80%;">
+            </div>
+            <div>
+                <form style="display: flex;">
+                    <input type="text" placeholder="100" style="width: 40px; height: 20px; margin-top: 40px; margin-right: 10px; margin-left: -37px;">
+                </form>
+            </div>
+        </div>
     </div>
+    <canvas id="carCanvas"></canvas>
     <canvas id="networkCanvas"></canvas>
     <script src="visualizer.js"></script>
     <script src="sensor.js"></script>
     <script src="networks.js"></script>
     <script src="utils.js"></script>
     <script src="road.js"></script>
+    <script src="buttonScripts.js"></script>
     <script src="controls.js"></script>
     <script src="car.js"></script> <!-- Include the compiled JavaScript file first -->
     <script src="main.js"></script> <!-- Include main.js after car.js -->
