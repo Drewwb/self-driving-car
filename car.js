@@ -1,6 +1,7 @@
 var Car = /** @class */ (function () {
     function Car(x, y, width, height, controlType, maxSpeed) {
         if (maxSpeed === void 0) { maxSpeed = 3; }
+        var _this = this;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -17,6 +18,29 @@ var Car = /** @class */ (function () {
             this.brain = new NeuralNetwork([this.sensor.rayCount, 6, 4]);
         }
         this.controls = new Controls(controlType);
+        this.img = new Image();
+        this.mask = document.createElement("canvas");
+        this.mask.width = width;
+        this.mask.height = height;
+        var maskCtx = this.mask.getContext("2d");
+        if (controlType != "DUMMY") {
+            this.img.src = "bluecar.png";
+            this.img.onload = function () {
+                maskCtx.fillStyle = "blue";
+                maskCtx.fillRect(0, 0, _this.width, _this.height);
+                maskCtx.globalCompositeOperation = "destination-atop";
+                maskCtx.drawImage(_this.img, 0, 0, _this.width, _this.height);
+            };
+        }
+        else {
+            this.img.src = "redcar.png";
+            this.img.onload = function () {
+                maskCtx.fillStyle = "red";
+                maskCtx.fillRect(0, 0, _this.width, _this.height);
+                maskCtx.globalCompositeOperation = "destination-atop";
+                maskCtx.drawImage(_this.img, 0, 0, _this.width, _this.height);
+            };
+        }
     }
     Car.prototype.update = function (roadBorders, traffic) {
         if (!this.damaged) {
@@ -109,21 +133,18 @@ var Car = /** @class */ (function () {
     };
     Car.prototype.draw = function (ctx, color, drawSensor) {
         if (drawSensor === void 0) { drawSensor = false; }
-        if (this.damaged) {
-            ctx.fillStyle = "pink";
-        }
-        else {
-            ctx.fillStyle = color;
-        }
-        ctx.beginPath();
-        ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
-        for (var i = 1; i < this.polygon.length; i++) {
-            ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
-        }
-        ctx.fill();
         if (this.sensor && drawSensor) {
             this.sensor.draw(ctx);
         }
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(-this.angle);
+        if (!this.damaged) {
+            ctx.drawImage(this.mask, -this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.globalCompositeOperation = "multiply";
+        }
+        ctx.drawImage(this.img, -this.width / 2, -this.height / 2, this.width, this.height);
+        ctx.restore();
     };
     return Car;
 }());

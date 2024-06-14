@@ -10,10 +10,12 @@ class Car {
     private friction: number;
     angle: number;
     private sensor: Sensor;
-    polygon : {x: number; y: number; } [];
+    polygon: { x: number; y: number; }[];
     damaged: boolean;
     brain: NeuralNetwork;
     useBrain: boolean;
+    img: HTMLImageElement;
+    mask: HTMLCanvasElement;
 
     constructor(x: number, y: number, width: number, height: number, controlType, maxSpeed = 3) {
         this.x = x;
@@ -28,14 +30,39 @@ class Car {
         this.angle = 0;
         this.damaged = false;
         this.useBrain = controlType == "AI";
-        
-        if(controlType != "DUMMY") {
+
+        if (controlType != "DUMMY") {
             this.sensor = new Sensor(this);
             this.brain = new NeuralNetwork(
-                [this.sensor.rayCount,6,4]
+                [this.sensor.rayCount, 6, 4]
             );
         }
-        this.controls = new Controls(controlType); 
+        this.controls = new Controls(controlType);
+
+        this.img = new Image();
+        this.mask = document.createElement("canvas");
+        this.mask.width = width;
+        this.mask.height = height;
+
+        const maskCtx = this.mask.getContext("2d");
+        
+        if (controlType != "DUMMY") {
+            this.img.src = "bluecar.png";
+            this.img.onload = () => {
+                maskCtx.fillStyle = "blue";
+                maskCtx.fillRect(0, 0, this.width, this.height);
+                maskCtx.globalCompositeOperation = "destination-atop";
+                maskCtx.drawImage(this.img, 0, 0, this.width, this.height);
+            };
+        } else {
+            this.img.src = "redcar.png";
+            this.img.onload = () => {
+                maskCtx.fillStyle = "red";
+                maskCtx.fillRect(0, 0, this.width, this.height);
+                maskCtx.globalCompositeOperation = "destination-atop";
+                maskCtx.drawImage(this.img, 0, 0, this.width, this.height);
+            };
+        }
     }
 
     update(roadBorders, traffic) {
@@ -140,20 +167,26 @@ class Car {
     }
 
     draw(ctx: CanvasRenderingContext2D, color, drawSensor = false): void {
-        if(this.damaged) {
-            ctx.fillStyle = "pink";
-        } else {
-            ctx.fillStyle = color
-        }
-        ctx.beginPath();
-        ctx.moveTo(this.polygon[0].x, this.polygon[0].y);
-        for(let i = 1; i < this.polygon.length; i++) {
-            ctx.lineTo(this.polygon[i].x, this.polygon[i].y);
-        }
-        ctx.fill();
-        if(this.sensor && drawSensor) {
+        if(this.sensor && drawSensor){
             this.sensor.draw(ctx);
         }
-        
+
+        ctx.save();
+        ctx.translate(this.x,this.y);
+        ctx.rotate(-this.angle);
+        if(!this.damaged){
+            ctx.drawImage(this.mask,
+                -this.width/2,
+                -this.height/2,
+                this.width,
+                this.height);
+            ctx.globalCompositeOperation="multiply";
+        }
+        ctx.drawImage(this.img,
+            -this.width/2,
+            -this.height/2,
+            this.width,
+            this.height);
+        ctx.restore();
     }
 }

@@ -30,6 +30,9 @@ button:hover img{
     background: lightslategray;
 }
 #networkCanvas{
+    background: none;
+}
+#buttonCanvas{
     background: lightslategray;
 }
 
@@ -65,30 +68,6 @@ button:hover img{
     margin-top: 20px;
 }
 
-.gg-play-button-o {
-    box-sizing: border-box;
-    position: relative;
-    display: block;
-    transform: scale(var(--ggs,1));
-    width: 22px;
-    height: 22px;
-    border: 2px solid;
-    border-radius: 20px
-}
-.gg-play-button-o::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    width: 0;
-    height: 10px;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    border-left: 6px solid;
-    top: 4px;
-    left: 7px
-}
-
 
 .tooltip {
     position: relative;
@@ -109,9 +88,9 @@ button:hover img{
     padding: 5px;
     position: absolute;
     z-index: 1;
-    bottom: 50%;
+    bottom: 75%;
     left: 5%;
-    margin-left: -60px;
+    margin-left: 0px;
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity 0.3s;
