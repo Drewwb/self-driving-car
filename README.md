@@ -1,6 +1,6 @@
 # Self-Driving Car Simulation
 
-![Project Logo](https://via.placeholder.com/728x90.png?text=Your+Project+Logo)
+![Project Logo](src/images//projecticon.png)
 
 This project is a web application that simulates a self-driving car scenario. It features a visual representation of multiple cars, including a highlighted car that demonstrates the best performance. Additionally, it displays a feed-forward neural network diagram that illustrates how the self-driving car makes decisions. Inspired by Dr. Radu Mariescu-Istodor.
 
