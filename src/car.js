@@ -24,7 +24,7 @@ var Car = /** @class */ (function () {
         this.mask.height = height;
         var maskCtx = this.mask.getContext("2d");
         if (controlType != "DUMMY") {
-            this.img.src = "bluecar.png";
+            this.img.src = "images/bluecar.png";
             this.img.onload = function () {
                 maskCtx.fillStyle = "blue";
                 maskCtx.fillRect(0, 0, _this.width, _this.height);
@@ -33,7 +33,7 @@ var Car = /** @class */ (function () {
             };
         }
         else {
-            this.img.src = "redcar.png";
+            this.img.src = "images/redcar.png";
             this.img.onload = function () {
                 maskCtx.fillStyle = "red";
                 maskCtx.fillRect(0, 0, _this.width, _this.height);
