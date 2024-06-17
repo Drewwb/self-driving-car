@@ -1,6 +1,7 @@
 # Self-Driving Car Simulation
 
 ![Project Logo](src/images//projecticon.png)
+[Play Here!](https://drewwb.github.io/self-driving-car/src/index.html)
 
 This project is a web application that simulates a self-driving car scenario. It features a visual representation of multiple cars, including a highlighted car that demonstrates the best performance. Additionally, it displays a feed-forward neural network diagram that illustrates how the self-driving car makes decisions. Inspired by Dr. Radu Mariescu-Istodor.
 
